@@ -55,8 +55,10 @@ if st.button("Generate Predictions"):
             home_players = df_tools.get_player_stats(home_team)
             away_players = df_tools.get_player_stats(away_team)
 
-            # Prepare data for Model (Must match train_model.py features)
-            # ['Last_5_Avg_FP', 'Opp_Def_Rank', 'Is_Home', 'Minutes_Avg']
+            # Check if data exists
+            if home_players.empty or away_players.empty:
+                st.warning(f"Stats missing for {home_team} or {away_team}. Skipping...")
+                continue
 
             # Add context features
             home_players['Is_Home'] = 1
